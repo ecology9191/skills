@@ -1,0 +1,37 @@
+{
+  "name": "@ecology91/skills",
+  "version": "0.1.0",
+  "description": "opencode agent skills for real engineering workflows.",
+  "license": "MIT",
+  "type": "module",
+  "bin": "./bin/install.mjs",
+  "files": [
+    "bin/",
+    "scripts/",
+    "skills/engineering/",
+    "skills/productivity/",
+    "skills/misc/",
+    "opencode.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecology9191/skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ecology9191/skills/issues"
+  },
+  "homepage": "https://github.com/ecology9191/skills#readme",
+  "keywords": [
+    "agent-skills",
+    "opencode",
+    "skills",
+    "ai-agents",
+    "sandcastle",
+    "ralph"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

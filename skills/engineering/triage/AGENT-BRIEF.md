@@ -1,6 +1,6 @@
 # Writing Agent Briefs
 
-An agent brief is a structured comment posted on a GitHub issue when it moves to `ready-for-agent`. It is the authoritative specification that an AFK agent will work from. The original issue body and discussion are context — the agent brief is the contract.
+An agent brief is a structured comment posted on an issue tracker issue when it moves to `ready-for-agent`. It is the authoritative specification that an AFK agent will work from. The original issue body and discussion are context — the agent brief is the contract.
 
 ## Principles
 
@@ -34,6 +34,18 @@ The agent needs to know when it's done. Every agent brief must have concrete, te
 
 State what is out of scope. This prevents the agent from gold-plating or making assumptions about adjacent features.
 
+### RALPH readiness
+
+Before marking an issue `ready-for-agent`, verify:
+
+- It is one independently implementable vertical slice.
+- No unresolved human decision remains.
+- Dependencies are recorded in the tracker, not only prose.
+- Acceptance criteria are concrete.
+- Runnable verification commands are named, or there is a clear reason none exists.
+- Out-of-scope boundaries are explicit.
+- QA notes describe human-visible behavior to verify after completion.
+
 ## Template
 
 ```markdown
@@ -59,6 +71,12 @@ Be specific about edge cases and error conditions.
 - [ ] Specific, testable criterion 1
 - [ ] Specific, testable criterion 2
 - [ ] Specific, testable criterion 3
+
+**Verification:**
+- Command or check the agent should run
+
+**QA notes:**
+- Human-visible behavior to verify after the issue is closed
 
 **Out of scope:**
 - Thing that should NOT be changed or addressed in this issue

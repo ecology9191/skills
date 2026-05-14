@@ -51,9 +51,13 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish the issues to the issue tracker
 
-For each approved slice, publish a new issue to the issue tracker. Use the issue body template below. These issues are considered ready for AFK agents, so publish them with the correct triage label unless instructed otherwise.
+For each approved slice, publish a new issue to the issue tracker. Use the issue body template below.
+
+AFK slices should receive the `ready-for-agent` triage label. HITL slices should receive `ready-for-human`. Blocked slices should have real tracker dependencies recorded, not only prose in the issue body.
 
 Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
+
+When using Beads and the source is a parent issue, create each child with `--parent <parent-id>`. Do not rely only on a `## Parent` body section. Use `bd create "Title" --body-file - --parent <parent-id> -t task -p 2 -l ready-for-agent --json` for AFK slices, and the same command with `-l ready-for-human` for HITL slices. Record dependencies with `bd dep add <blocked-child-id> <blocking-child-id> --type blocks`.
 
 <issue-template>
 ## Parent
@@ -71,6 +75,18 @@ Avoid specific file paths or code snippets — they go stale fast. Exception: if
 - [ ] Criterion 1
 - [ ] Criterion 2
 - [ ] Criterion 3
+
+## Verification
+
+Commands or checks the agent should run. Prefer repo-standard commands.
+
+## QA notes
+
+Human-visible behavior that should be verified after child issues are closed.
+
+## Out of scope
+
+Adjacent behavior the agent must not change.
 
 ## Blocked by
 

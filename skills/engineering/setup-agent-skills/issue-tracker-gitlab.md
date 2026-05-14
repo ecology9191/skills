@@ -21,3 +21,14 @@ Create a GitLab issue.
 ## When a skill says "fetch the relevant ticket"
 
 Run `glab issue view <number> --comments`.
+
+## `/to-qa` support
+
+This template does not define a default completed-child query for `/to-qa`. If this repo uses GitLab Issues with `/to-qa`, extend `docs/agents/issue-tracker.md` with:
+
+- how parent issues link to child issues,
+- how completed child work is identified,
+- which issue states/labels count as completed,
+- which command fetches the full child set.
+
+Do not mutate GitLab issues during `/to-qa`.

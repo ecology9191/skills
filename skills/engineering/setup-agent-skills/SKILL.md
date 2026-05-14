@@ -1,6 +1,6 @@
 ---
 name: setup-agent-skills
-description: Sets up an `## Agent skills` block in AGENTS.md and `docs/agents/` so the engineering skills know this repo's issue tracker (GitHub or local markdown), triage label vocabulary, and domain doc layout. Run before first use of `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out` — or if those skills appear to be missing context about the issue tracker, triage labels, or domain docs.
+description: Sets up an `## Agent skills` block in AGENTS.md and `docs/agents/` so the engineering skills know this repo's issue tracker (GitHub, GitLab, Beads, local markdown, or custom), triage label vocabulary, and domain doc layout. Run before first use of `to-issues`, `to-prd`, `to-qa`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out` — or if those skills appear to be missing context about the issue tracker, triage labels, or domain docs.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Scaffold the per-repo configuration that the engineering skills assume:
 
-- **Issue tracker** — where issues live (GitHub by default; local markdown is also supported out of the box)
+- **Issue tracker** — where issues live (GitHub, GitLab, Beads, local markdown, and custom workflows are supported)
 - **Triage labels** — the strings used for the five canonical triage roles
 - **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 
@@ -21,6 +21,10 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:
 
 - `git remote -v` and `.git/config` — is this a GitHub repo? Which one?
+- `.beads/` — is Beads already initialized for local issue tracking?
+- `bd --help` or `command -v bd` — is the Beads CLI available?
+- `.sandcastle/` — does existing Sandcastle prompt/config scaffolding mention Beads commands such as `bd ready --json`?
+- If `.sandcastle/` exists, inspect prompts for stale RALPH anti-patterns: planner analyzing dependencies from `bd ready`, implementer saying "fill your context window", implementer preloading full recent commits, implementer fetching issue context itself instead of using provided task context, merge prompt running tests after each branch, or merge prompt closing all listed issues instead of only merge-eligible issues.
 - `AGENTS.md` at the repo root — does it exist? Is there already an `## Agent skills` section?
 - `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
@@ -35,14 +39,19 @@ Assume the user does not know what these terms mean. Each section starts with a 
 
 **Section A — Issue tracker.**
 
-> Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-issues`, `triage`, `to-prd`, and `qa` read from and write to it — they need to know whether to call `gh issue create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
+> Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-issues`, `triage`, and `to-prd` read from and write to it. `/to-qa` reads parent and completed child work from it, then writes QA checks to QA To Do instead of mutating tracker issues. Pick the place you actually track work for this repo.
 
-Default posture: these skills were designed for GitHub. If a `git remote` points at GitHub, propose that. If a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab. Otherwise (or if the user prefers), offer:
+Default posture: these skills were designed for GitHub and Beads/Sandcastle workflows. If a `git remote` points at GitHub, propose GitHub. If a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab. If `.beads/` exists or Sandcastle/RALPH conventions are present, propose Beads. Otherwise (or if the user prefers), offer:
 
 - **GitHub** — issues live in the repo's GitHub Issues (uses the `gh` CLI)
 - **GitLab** — issues live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
+- **Beads** — issues live in `.beads/` and are managed with the `bd` CLI; this is the most explicit option for Sandcastle/RALPH parent-child issue workflows
 - **Local markdown** — issues live as files under `.scratch/<feature>/` in this repo (good for solo projects or repos without a remote)
 - **Other** (Jira, Linear, etc.) — ask the user to describe the workflow in one paragraph; the skill will record it as freeform prose
+
+For `/to-qa`, make sure the chosen issue tracker documentation explains how to fetch completed child work for a parent issue. Beads and local markdown templates include this by default. GitHub, GitLab, and custom trackers need a repo-specific parent/child convention if the user wants `/to-qa` to work there.
+
+If stale `.sandcastle/` prompt anti-patterns are present, warn that RALPH prompts should be updated before running autonomous work. Current Sandcastle loops should pass compact `bd ready` output to the planner, load task context once before implementer launch, use completion signals for merge eligibility, and run verification at the right level rather than repeatedly per branch.
 
 **Section B — Triage label vocabulary.**
 
@@ -71,7 +80,7 @@ Confirm the layout:
 
 Show the user a draft of:
 
-- The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
+- The `## Agent skills` block to add to `AGENTS.md`
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`
 
 Let them edit before writing.
@@ -80,11 +89,8 @@ Let them edit before writing.
 
 **Pick the file to edit:**
 
-- If `CLAUDE.md` exists, edit it.
-- Else if `AGENTS.md` exists, edit it.
-- If neither exists, ask the user which one to create — don't pick for them.
-
-Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa) — always edit the one that's already there.
+- If `AGENTS.md` exists, edit it.
+- If it does not exist, create `AGENTS.md`.
 
 If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
 
@@ -110,6 +116,7 @@ Then write the three docs files using the seed templates in this skill folder as
 
 - [issue-tracker-github.md](./issue-tracker-github.md) — GitHub issue tracker
 - [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) — GitLab issue tracker
+- [issue-tracker-beads.md](./issue-tracker-beads.md) — Beads issue tracker
 - [issue-tracker-local.md](./issue-tracker-local.md) — local-markdown issue tracker
 - [triage-labels.md](./triage-labels.md) — label mapping
 - [domain.md](./domain.md) — domain doc consumer rules + layout

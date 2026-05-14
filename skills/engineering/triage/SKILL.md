@@ -37,6 +37,10 @@ Every triaged issue should carry exactly one category role and one state role. I
 
 These are canonical role names — the actual label strings used in the issue tracker may differ. The mapping should have been provided to you - run `/setup-agent-skills` if not.
 
+Before marking an issue `ready-for-agent`, verify it is one independently implementable vertical slice, has no unresolved human decision, records dependencies in the tracker instead of only prose, has concrete acceptance criteria, names runnable verification commands or explains why none exist, has explicit out-of-scope boundaries, and includes QA notes for human verification.
+
+`ready-for-human` is a Sandcastle gate. Open or deferred `ready-for-human` issues can stop autonomous RALPH runs. Use it only for real human decisions or manual work.
+
 State transitions: an unlabeled issue normally goes to `needs-triage` first; from there it moves to `needs-info`, `ready-for-agent`, `ready-for-human`, or `wontfix`. `needs-info` returns to `needs-triage` once the reporter replies. The maintainer can override at any time — flag transitions that look unusual and ask before proceeding.
 
 ## Invocation

@@ -1,6 +1,7 @@
 # Skills For Real Engineers
 
 [![skills.sh](https://skills.sh/b/ecology9191/skills)](https://skills.sh/ecology9191/skills)
+[![npm](https://img.shields.io/npm/v/@ecology91/skills)](https://www.npmjs.com/package/@ecology91/skills)
 
 Agent skills for doing real engineering with opencode - not vibe coding.
 
@@ -10,26 +11,32 @@ These skills are designed to be small, easy to adapt, and composable. They work 
 
 ## Quickstart For opencode
 
-1. Install the skills into opencode:
+1. Install the skills into opencode from the fork repo:
 
 ```bash
 npx skills@latest add ecology9191/skills -a opencode
 ```
 
-2. For local development on this repo, link the checked-out skills into opencode's global skills directory:
+2. Or install the published npm package directly:
+
+```bash
+npx @ecology91/skills
+```
+
+3. For local development on this repo, link the checked-out skills into opencode's global skills directory:
 
 ```bash
 ./scripts/link-skills.sh
 ```
 
-3. Quit and restart opencode so it reloads the skill list.
+4. Quit and restart opencode so it reloads the skill list.
 
-4. Run `/setup-agent-skills` in opencode. It will:
-   - Ask you which issue tracker you want to use (GitHub, Linear, or local files)
+5. Run `/setup-agent-skills` in opencode. It will:
+   - Ask you which issue tracker you want to use (GitHub, GitLab, Beads, `.scratch`, or another workflow)
    - Ask you what labels you apply to issues when you triage them (`/triage` uses labels)
    - Ask you where you want to save any docs we create
 
-5. Bam - you're ready to go.
+6. Bam - you're ready to go.
 
 This repo also includes `opencode.json`, so opencode loads the promoted skill buckets automatically when you open this repo directly.
 
@@ -144,10 +151,12 @@ Skills I use daily for code work.
 - **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
 - **[triage](./skills/engineering/triage/SKILL.md)** — Triage issues through a state machine of triage roles.
 - **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Find deepening opportunities in a codebase, informed by the domain language in `CONTEXT.md` and the decisions in `docs/adr/`.
-- **[setup-agent-skills](./skills/engineering/setup-agent-skills/SKILL.md)** — Scaffold the per-repo config (issue tracker, triage label vocabulary, domain doc layout) that the other engineering skills consume. Run once per repo before using `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out`.
+- **[setup-coding-quality-checks](./skills/engineering/setup-coding-quality-checks/SKILL.md)** — Set up strict local formatters, linters, typechecks, tests, scanners, and git hooks that make agent coding safer.
+- **[setup-agent-skills](./skills/engineering/setup-agent-skills/SKILL.md)** — Scaffold the per-repo config (issue tracker, triage label vocabulary, domain doc layout) that the other engineering skills consume. Run once per repo before using `to-issues`, `to-prd`, `to-qa`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out`.
 - **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break any plan, spec, or PRD into independently-grabbable GitHub issues using vertical slices.
-- **[to-prd](./skills/engineering/to-prd/SKILL.md)** — Turn the current conversation context into a PRD and submit it as a GitHub issue. No interview — just synthesizes what you've already discussed.
+- **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break any plan, spec, or PRD into independently-grabbable issues on the project issue tracker using vertical slices.
+- **[to-prd](./skills/engineering/to-prd/SKILL.md)** — Turn the current conversation context into a PRD and submit it to the project issue tracker. No interview — just synthesizes what you've already discussed.
+- **[to-qa](./skills/engineering/to-qa/SKILL.md)** — Create a local QA To Do session from completed child work under an explicit parent issue.
 - **[zoom-out](./skills/engineering/zoom-out/SKILL.md)** — Tell the agent to zoom out and give broader context or a higher-level perspective on an unfamiliar section of code.
 - **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to flesh out a design — either a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route.
 

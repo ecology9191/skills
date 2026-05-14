@@ -8,7 +8,7 @@ Every issue-tracker backend hard-codes a CLI shape into the skills (commands, fl
 
 "Mainstream" is a judgment call, not a numeric bar:
 
-- GitHub, GitLab, and Backlog.md are the kind of tools we'd consider mainstream — broadly known, widely used, well past the experimental phase.
+- GitHub, GitLab, Beads, and Backlog.md are the kind of tools we'd consider mainstream or first-class for this repo's workflows — broadly known, widely used, or already part of the Sandcastle/RALPH path.
 - A brand-new agent-focused tool with a few hundred GitHub stars is not, no matter how interesting the design.
 
 Stars, age, and download counts are useful signals when making the call but none of them is the rule. The rule is: would a typical engineer recognise this tool and have plausibly chosen it for their team?
