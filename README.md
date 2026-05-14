@@ -20,7 +20,7 @@ npx skills@latest add ecology9191/skills -a opencode
 2. Or install the published npm package directly:
 
 ```bash
-npx @ecology91/skills
+npx --package @ecology91/skills ecology91-skills
 ```
 
 3. For local development on this repo, link the checked-out skills into opencode's global skills directory:
