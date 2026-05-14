@@ -1,6 +1,6 @@
-# Matt Pocock Skills
+# Agent Skills
 
-A collection of agent skills (slash commands and behaviors) loaded by Claude Code. Skills are organized into buckets and consumed by per-repo configuration emitted by `/setup-matt-pocock-skills`.
+A collection of opencode agent skills (slash commands and behaviors). Skills are organized into buckets and consumed by per-repo configuration emitted by `/setup-agent-skills`.
 
 ## Language
 
