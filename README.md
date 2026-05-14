@@ -156,7 +156,7 @@ Skills I use daily for code work.
 - **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
 - **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break any plan, spec, or PRD into independently-grabbable issues on the project issue tracker using vertical slices.
 - **[to-prd](./skills/engineering/to-prd/SKILL.md)** — Turn the current conversation context into a PRD and submit it to the project issue tracker. No interview — just synthesizes what you've already discussed.
-- **[to-qa](./skills/engineering/to-qa/SKILL.md)** — Create a local QA To Do session from completed child work under an explicit parent issue.
+- **[to-qa](./skills/engineering/to-qa/SKILL.md)** — Create a local QA To Do session from completed source work under an explicit issue, including older non-parent Beads issues.
 - **[zoom-out](./skills/engineering/zoom-out/SKILL.md)** — Tell the agent to zoom out and give broader context or a higher-level perspective on an unfamiliar section of code.
 - **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to flesh out a design — either a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route.
 
