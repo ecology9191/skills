@@ -13,6 +13,7 @@
   "files": [
     "bin/",
     "scripts/",
+    ".claude-plugin/",
     "skills/engineering/",
     "skills/productivity/",
     "skills/misc/",
@@ -40,11 +41,12 @@
     "access": "public"
   },
   "scripts": {
-    "typecheck": "node --check bin/install.mjs && node --check bin/collect-skills.mjs && node --check bin/prompt-skills.mjs && node --check bin/resolve-selection.mjs && node --check bin/resolve-selection.test.mjs && node --check scripts/verify-package-files.mjs",
+    "typecheck": "node --check bin/install.mjs && node --check bin/collect-skills.mjs && node --check bin/prompt-skills.mjs && node --check bin/resolve-selection.mjs && node --check bin/resolve-selection.test.mjs && node --check scripts/generate-marketplace.mjs && node --check scripts/verify-marketplace.mjs && node --check scripts/verify-package-files.mjs",
     "test": "node --test bin/resolve-selection.test.mjs && node bin/install.mjs --dry-run --copy --all",
     "test:unit": "node --test bin/resolve-selection.test.mjs",
     "link-skills": "./scripts/link-skills.sh",
-    "build": "node scripts/verify-package-files.mjs",
+    "build": "node scripts/verify-package-files.mjs && node scripts/verify-marketplace.mjs",
+    "generate:marketplace": "node scripts/generate-marketplace.mjs",
     "validate:fast": "npm run typecheck && npm run test",
     "validate": "npm run validate:fast && npm run build"
   }

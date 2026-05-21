@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "pluginRoot": "./skills"
+  },
+  "plugins": [
+    {
+      "name": "engineering",
+      "source": "./engineering",
+      "skills": [
+        "./diagnose",
+        "./grill-with-docs",
+        "./improve-codebase-architecture",
+        "./prototype",
+        "./setup-agent-skills",
+        "./setup-coding-quality-checks",
+        "./tdd",
+        "./to-issues",
+        "./to-prd",
+        "./to-qa",
+        "./triage",
+        "./zoom-out"
+      ]
+    },
+    {
+      "name": "productivity",
+      "source": "./productivity",
+      "skills": [
+        "./caveman",
+        "./grill-me",
+        "./handoff",
+        "./write-a-skill"
+      ]
+    },
+    {
+      "name": "misc",
+      "source": "./misc",
+      "skills": [
+        "./git-guardrails-opencode",
+        "./migrate-to-shoehorn",
+        "./scaffold-exercises",
+        "./setup-pre-commit"
+      ]
+    }
+  ]
+}

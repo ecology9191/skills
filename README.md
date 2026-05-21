@@ -17,6 +17,8 @@ These skills are designed to be small, easy to adapt, and composable. They work 
 npx skills@latest add ecology9191/skills -g
 ```
 
+The install menu is grouped by bucket (`engineering`, `productivity`, `misc`). Toggle a whole category or pick individual skills in one screen.
+
 1. Or install from a git checkout or the published npm package:
 
 ```bash
