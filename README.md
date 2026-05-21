@@ -9,29 +9,29 @@ Developing real applications is hard. Approaches like GSD, BMAD, and Spec-Kit tr
 
 These skills are designed to be small, easy to adapt, and composable. They work with any model. They're based on decades of engineering experience. Hack around with them. Make them your own. Enjoy.
 
-## Quickstart For opencode
+## Quickstart
 
-1. Install the skills into opencode from the fork repo:
+1. Install the skills globally from the fork repo (via [skills.sh](https://skills.sh)):
 
 ```bash
-npx skills@latest add ecology9191/skills -a opencode
+npx skills@latest add ecology9191/skills -g
 ```
 
-2. Or install the published npm package directly:
+2. Or install from a git checkout or the published npm package:
 
 ```bash
 npx --package @ecology91/skills ecology91-skills
 ```
 
-3. For local development on this repo, link the checked-out skills into opencode's global skills directory:
+From a git checkout this symlinks into `~/.agents/skills` so edits in the repo are live. From the published package it copies files instead.
 
-```bash
-./scripts/link-skills.sh
-```
+3. Force a copy install from a checkout with `--copy`.
 
-4. Quit and restart opencode so it reloads the skill list.
+OpenCode auto-loads `~/.agents/skills` alongside its own config tree, so one global install works across harnesses.
 
-5. Run `/setup-agent-skills` in opencode. It will:
+4. Quit and restart your agent so it reloads the skill list.
+
+5. Run `/setup-agent-skills` in your coding agent. It will:
    - Ask you which issue tracker you want to use (GitHub, GitLab, Beads, `.scratch`, or another workflow)
    - Ask you what labels you apply to issues when you triage them (`/triage` uses labels)
    - Ask you where you want to save any docs we create

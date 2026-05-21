@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Links promoted skills in the repository to opencode's global skills
-# directory, so they can be used from any opencode project.
+# Links promoted skills in the repository to ~/.agents/skills so they are
+# available globally across agent harnesses (opencode, Cursor, etc.).
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DEST="$HOME/.config/opencode/skills"
+DEST="$HOME/.agents/skills"
 
 # If the destination is a symlink that resolves into this repo, we'd end up
 # writing the per-skill symlinks back into the repo's own skills/ tree. Detect

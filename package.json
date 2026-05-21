@@ -38,7 +38,8 @@
   },
   "scripts": {
     "typecheck": "node --check bin/install.mjs && node --check scripts/verify-package-files.mjs",
-    "test": "node bin/install.mjs --dry-run",
+    "test": "node bin/install.mjs --dry-run --copy",
+    "link-skills": "./scripts/link-skills.sh",
     "build": "node scripts/verify-package-files.mjs",
     "validate:fast": "npm run typecheck && npm run test",
     "validate": "npm run validate:fast && npm run build"
