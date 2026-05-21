@@ -103,5 +103,16 @@ function filterByFlags(allSkills, values, allNames) {
 export function skillsFromNames(selectedNames, allSkills) {
   if (!selectedNames || selectedNames.length === 0) return [];
   const byName = new Map(allSkills.map((skill) => [skill.name, skill]));
-  return selectedNames.map((name) => byName.get(name)).filter(Boolean);
+  const seen = new Set();
+  /** @type {typeof allSkills} */
+  const selected = [];
+
+  for (const name of selectedNames) {
+    if (seen.has(name)) continue;
+    seen.add(name);
+    const skill = byName.get(name);
+    if (skill) selected.push(skill);
+  }
+
+  return selected;
 }

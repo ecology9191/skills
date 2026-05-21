@@ -3,12 +3,14 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { note, outro, spinner } from "@clack/prompts";
 import {
   collectSkillsByBucket,
   countByBucket,
   flattenCatalog,
   formatBucketCounts,
 } from "./collect-skills.mjs";
+import { formatInstallSummary } from "./install-summary.mjs";
 import { promptSkillSelection } from "./prompt-skills.mjs";
 import { parseArgs, resolveSelection, skillsFromNames } from "./resolve-selection.mjs";
 
@@ -54,6 +56,7 @@ const isGitCheckout = fs.existsSync(path.join(root, ".git"));
 const link = flags.has("--link") || (isGitCheckout && !flags.has("--copy"));
 const isInteractive =
   Boolean(process.stdin.isTTY && process.stdout.isTTY) && !flags.has("--all");
+const useClackSummary = isInteractive;
 
 const catalog = collectSkillsByBucket(root, destRoot);
 const allSkills = flattenCatalog(catalog);
@@ -97,39 +100,54 @@ function installCopy(skills) {
 
   const grouped = groupSkillsByBucket(skills);
   for (const [bucket, bucketSkills] of grouped) {
-    console.log(`${bucket} (${bucketSkills.length})`);
+    if (!useClackSummary) {
+      console.log(`${bucket} (${bucketSkills.length})`);
+    }
+
     for (const skill of bucketSkills) {
       if (dryRun) {
-        console.log(`  would install ${skill.name} -> ${skill.dest}`);
+        if (!useClackSummary) {
+          console.log(`  would install ${skill.name} -> ${skill.dest}`);
+        }
         continue;
       }
 
       fs.rmSync(skill.dest, { recursive: true, force: true });
       fs.cpSync(skill.src, skill.dest, { recursive: true, force: true });
-      console.log(`  installed ${skill.name} -> ${skill.dest}`);
+      if (!useClackSummary) {
+        console.log(`  installed ${skill.name} -> ${skill.dest}`);
+      }
     }
   }
+
+  return grouped;
 }
 
 /** @param {{ bucket: string, name: string, src: string, dest: string }[]} skills */
 function installLink(skills) {
+  const grouped = groupSkillsByBucket(skills);
+
   if (dryRun) {
-    const grouped = groupSkillsByBucket(skills);
     for (const [bucket, bucketSkills] of grouped) {
-      console.log(`${bucket} (${bucketSkills.length})`);
+      if (!useClackSummary) {
+        console.log(`${bucket} (${bucketSkills.length})`);
+      }
       for (const skill of bucketSkills) {
-        console.log(`  would link ${skill.name} -> ${skill.dest} (${skill.src})`);
+        if (!useClackSummary) {
+          console.log(`  would link ${skill.name} -> ${skill.dest} (${skill.src})`);
+        }
       }
     }
-    return;
+    return grouped;
   }
 
   assertSafeDest();
   fs.mkdirSync(destRoot, { recursive: true });
 
-  const grouped = groupSkillsByBucket(skills);
   for (const [bucket, bucketSkills] of grouped) {
-    console.log(`${bucket} (${bucketSkills.length})`);
+    if (!useClackSummary) {
+      console.log(`${bucket} (${bucketSkills.length})`);
+    }
     for (const skill of bucketSkills) {
       const stat = fs.lstatSync(skill.dest, { throwIfNoEntry: false });
       if (stat) {
@@ -137,9 +155,43 @@ function installLink(skills) {
       }
 
       fs.symlinkSync(skill.src, skill.dest);
-      console.log(`  linked ${skill.name} -> ${skill.src}`);
+      if (!useClackSummary) {
+        console.log(`  linked ${skill.name} -> ${skill.src}`);
+      }
     }
   }
+
+  return grouped;
+}
+
+function printPlainSummary(selectedSkills, mode) {
+  const verb = dryRun ? "Checked" : mode === "link" ? "Linked" : "Installed";
+  console.log(
+    `${verb} ${selectedSkills.length} skills to ~/.agents/skills (${formatBucketCounts(countByBucket(selectedSkills))}).`,
+  );
+  console.log("Restart your agent (opencode, Cursor, etc.) to reload the skill list.");
+}
+
+function printClackSummary(grouped, mode) {
+  const summarySkills = new Map();
+  for (const [bucket, bucketSkills] of grouped) {
+    summarySkills.set(
+      bucket,
+      bucketSkills.map((skill) => ({
+        name: skill.name,
+        dest: skill.dest,
+        src: mode === "link" ? skill.src : undefined,
+      })),
+    );
+  }
+
+  const { title, lines } = formatInstallSummary(summarySkills, {
+    mode: mode === "link" ? "link" : "copy",
+    dryRun,
+  });
+
+  note(lines, title);
+  outro("Restart your agent (opencode, Cursor, etc.) to reload the skill list.");
 }
 
 let selectedSkills;
@@ -163,18 +215,23 @@ if (selectedSkills.length === 0) {
   process.exit(0);
 }
 
-if (link) {
-  installLink(selectedSkills);
-  const verb = dryRun ? "Checked" : "Linked";
-  console.log(
-    `${verb} ${selectedSkills.length} skills to ~/.agents/skills (${formatBucketCounts(countByBucket(selectedSkills))}).`,
-  );
-} else {
-  installCopy(selectedSkills);
-  const verb = dryRun ? "Checked" : "Installed";
-  console.log(
-    `${verb} ${selectedSkills.length} skills to ~/.agents/skills (${formatBucketCounts(countByBucket(selectedSkills))}).`,
-  );
+const installMode = link ? "link" : "copy";
+const s = spinner();
+
+if (useClackSummary) {
+  s.start("Installing skills...");
 }
 
-console.log("Restart your agent (opencode, Cursor, etc.) to reload the skill list.");
+let grouped;
+if (installMode === "link") {
+  grouped = installLink(selectedSkills);
+} else {
+  grouped = installCopy(selectedSkills);
+}
+
+if (useClackSummary) {
+  s.stop("Installation complete");
+  printClackSummary(grouped, installMode);
+} else {
+  printPlainSummary(selectedSkills, installMode);
+}

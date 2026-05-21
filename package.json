@@ -1,6 +1,6 @@
 {
   "name": "@ecology91/skills",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "opencode agent skills for real engineering workflows.",
   "license": "MIT",
   "type": "module",
@@ -41,9 +41,9 @@
     "access": "public"
   },
   "scripts": {
-    "typecheck": "node --check bin/install.mjs && node --check bin/collect-skills.mjs && node --check bin/prompt-skills.mjs && node --check bin/resolve-selection.mjs && node --check bin/resolve-selection.test.mjs && node --check scripts/generate-marketplace.mjs && node --check scripts/verify-marketplace.mjs && node --check scripts/verify-package-files.mjs",
-    "test": "node --test bin/resolve-selection.test.mjs && node bin/install.mjs --dry-run --copy --all",
-    "test:unit": "node --test bin/resolve-selection.test.mjs",
+    "typecheck": "node --check bin/install.mjs && node --check bin/collect-skills.mjs && node --check bin/install-summary.mjs && node --check bin/prompt-skills.mjs && node --check bin/resolve-selection.mjs && node --check bin/resolve-selection.test.mjs && node --check bin/install-summary.test.mjs && node --check scripts/generate-marketplace.mjs && node --check scripts/verify-marketplace.mjs && node --check scripts/verify-package-files.mjs",
+    "test": "node --test bin/resolve-selection.test.mjs && node --test bin/install-summary.test.mjs && node bin/install.mjs --dry-run --copy --all",
+    "test:unit": "node --test bin/resolve-selection.test.mjs && node --test bin/install-summary.test.mjs",
     "link-skills": "./scripts/link-skills.sh",
     "build": "node scripts/verify-package-files.mjs && node scripts/verify-marketplace.mjs",
     "generate:marketplace": "node scripts/generate-marketplace.mjs",

@@ -1,4 +1,4 @@
-import { cancel, groupMultiselect, intro, isCancel, outro } from "@clack/prompts";
+import { cancel, groupMultiselect, intro, isCancel } from "@clack/prompts";
 
 /**
  * @param {{ id: string, label: string, skills: { name: string, description: string }[] }[]} catalog
@@ -34,6 +34,5 @@ export async function promptSkillSelection(catalog) {
     return null;
   }
 
-  outro(`Selected ${selected.length} skill${selected.length === 1 ? "" : "s"}.`);
   return selected;
 }

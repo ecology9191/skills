@@ -58,3 +58,9 @@ test("skillsFromNames preserves prompt order", () => {
   const selected = skillsFromNames(["caveman", "tdd"], allSkills);
   assert.deepEqual(selected.map((skill) => skill.name), ["caveman", "tdd"]);
 });
+
+test("skillsFromNames deduplicates repeated selections", () => {
+  const allSkills = catalog.flatMap((bucket) => bucket.skills);
+  const selected = skillsFromNames(["tdd", "tdd", "tdd"], allSkills);
+  assert.deepEqual(selected.map((skill) => skill.name), ["tdd"]);
+});
