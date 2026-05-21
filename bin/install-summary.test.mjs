@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import os from "node:os";
+import path from "node:path";
 import { test } from "node:test";
 import { dedupePaths, formatInstallSummary, shortenPath } from "./install-summary.mjs";
 
@@ -10,10 +12,11 @@ test("dedupePaths removes duplicate install destinations", () => {
 });
 
 test("formatInstallSummary shows one destination line per skill", () => {
+  const dest = path.join(os.homedir(), ".agents", "skills", "diagnose");
   const grouped = new Map([
     [
       "engineering",
-      [{ name: "diagnose", dest: "/home/xd/.agents/skills/diagnose" }],
+      [{ name: "diagnose", dest }],
     ],
   ]);
 
@@ -23,5 +26,6 @@ test("formatInstallSummary shows one destination line per skill", () => {
 });
 
 test("shortenPath replaces home prefix with tilde", () => {
-  assert.match(shortenPath("/home/xd/.agents/skills/tdd"), /^~\//);
+  const dest = path.join(os.homedir(), ".agents", "skills", "tdd");
+  assert.equal(shortenPath(dest), "~/.agents/skills/tdd");
 });
