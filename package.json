@@ -4,6 +4,9 @@
   "description": "opencode agent skills for real engineering workflows.",
   "license": "MIT",
   "type": "module",
+  "dependencies": {
+    "@clack/prompts": "^0.11.0"
+  },
   "bin": {
     "ecology91-skills": "bin/install.mjs"
   },
@@ -37,8 +40,9 @@
     "access": "public"
   },
   "scripts": {
-    "typecheck": "node --check bin/install.mjs && node --check scripts/verify-package-files.mjs",
-    "test": "node bin/install.mjs --dry-run --copy",
+    "typecheck": "node --check bin/install.mjs && node --check bin/collect-skills.mjs && node --check bin/prompt-skills.mjs && node --check bin/resolve-selection.mjs && node --check bin/resolve-selection.test.mjs && node --check scripts/verify-package-files.mjs",
+    "test": "node --test bin/resolve-selection.test.mjs && node bin/install.mjs --dry-run --copy --all",
+    "test:unit": "node --test bin/resolve-selection.test.mjs",
     "link-skills": "./scripts/link-skills.sh",
     "build": "node scripts/verify-package-files.mjs",
     "validate:fast": "npm run typecheck && npm run test",

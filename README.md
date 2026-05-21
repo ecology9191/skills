@@ -1,7 +1,7 @@
 # Skills For Real Engineers
 
-[![skills.sh](https://skills.sh/b/ecology9191/skills)](https://skills.sh/ecology9191/skills)
-[![npm](https://img.shields.io/npm/v/@ecology91/skills)](https://www.npmjs.com/package/@ecology91/skills)
+[skills.sh](https://skills.sh/ecology9191/skills)
+[npm](https://www.npmjs.com/package/@ecology91/skills)
 
 Agent skills for doing real engineering with opencode - not vibe coding.
 
@@ -17,26 +17,31 @@ These skills are designed to be small, easy to adapt, and composable. They work 
 npx skills@latest add ecology9191/skills -g
 ```
 
-2. Or install from a git checkout or the published npm package:
+1. Or install from a git checkout or the published npm package:
 
 ```bash
 npx --package @ecology91/skills ecology91-skills
 ```
 
+This opens an interactive menu grouped by bucket (`engineering`, `productivity`, `misc`). Toggle a whole category or pick individual skills in one screen. Use `--all` to skip the menu, or `--bucket` / `--skill` for non-interactive partial installs.
+
 From a git checkout this symlinks into `~/.agents/skills` so edits in the repo are live. From the published package it copies files instead.
 
-3. Force a copy install from a checkout with `--copy`.
+```bash
+npx --package @ecology91/skills ecology91-skills --all
+npx --package @ecology91/skills ecology91-skills --bucket engineering --skill tdd
+```
+
+1. Force a copy install from a checkout with `--copy`.
 
 OpenCode auto-loads `~/.agents/skills` alongside its own config tree, so one global install works across harnesses.
 
-4. Quit and restart your agent so it reloads the skill list.
-
-5. Run `/setup-agent-skills` in your coding agent. It will:
-   - Ask you which issue tracker you want to use (GitHub, GitLab, Beads, `.scratch`, or another workflow)
-   - Ask you what labels you apply to issues when you triage them (`/triage` uses labels)
-   - Ask you where you want to save any docs we create
-
-6. Bam - you're ready to go.
+1. Quit and restart your agent so it reloads the skill list.
+2. Run `/setup-agent-skills` in your coding agent. It will:
+  - Ask you which issue tracker you want to use (GitHub, GitLab, Beads, `.scratch`, or another workflow)
+  - Ask you what labels you apply to issues when you triage them (`/triage` uses labels)
+  - Ask you where you want to save any docs we create
+3. Bam - you're ready to go.
 
 This repo also includes `opencode.json`, so opencode loads the promoted skill buckets automatically when you open this repo directly.
 
@@ -56,10 +61,10 @@ This is just the same in the AI age. There is a communication gap between you an
 
 **The Fix** is to use:
 
-- [`/grill-me`](./skills/productivity/grill-me/SKILL.md) - for non-code uses
-- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) - same as [`/grill-me`](./skills/productivity/grill-me/SKILL.md), but adds more goodies (see below)
+- `[/grill-me](./skills/productivity/grill-me/SKILL.md)` - for non-code uses
+- `[/grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)` - same as `[/grill-me](./skills/productivity/grill-me/SKILL.md)`, but adds more goodies (see below)
 
-These are my most popular skills. They help you align with the agent before you get started, and think deeply about the change you're making. Use them _every_ time you want to make a change.
+These are my most popular skills. They help you align with the agent before you get started, and think deeply about the change you're making. Use them *every* time you want to make a change.
 
 ### #2: The Agent Is Way Too Verbose
 
@@ -73,10 +78,7 @@ I felt the same tension with my agents. Agents are usually dropped into a projec
 
 **The Fix** for this is a shared language. It's a document that helps agents decode the jargon used in the project.
 
-<details>
-<summary>
 Example
-</summary>
 
 Here's a before-and-after example. Which one is easier to read?
 
@@ -85,9 +87,9 @@ Here's a before-and-after example. Which one is easier to read?
 
 This concision pays off session after session.
 
-</details>
 
-This is built into [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md). It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
+
+This is built into `[/grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)`. It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
 
 It's hard to explain how powerful this is. It might be the single coolest technique in this repo. Try it, and see.
 
@@ -104,7 +106,7 @@ It's hard to explain how powerful this is. It might be the single coolest techni
 >
 > David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
 
-**The Problem**: Let's say that you and the agent are aligned on what to build. What happens when the agent _still_ produces crap?
+**The Problem**: Let's say that you and the agent are aligned on what to build. What happens when the agent *still* produces crap?
 
 It's time to look at your feedback loops. Without feedback on how the code it produces actually runs, the agent will be flying blind.
 
@@ -112,13 +114,13 @@ It's time to look at your feedback loops. Without feedback on how the code it pr
 
 For automated tests, a red-green-refactor loop is critical. This is where the agent writes a failing test first, then fixes the test. This helps give the agent a consistent level of feedback that results in far better code.
 
-I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md) skill** you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
+I've built a `**[/tdd](./skills/engineering/tdd/SKILL.md)` skill** you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
 
-For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/SKILL.md)** skill that wraps best debugging practices into a simple loop.
+For debugging, I've also built a `**[/diagnose](./skills/engineering/diagnose/SKILL.md)`** skill that wraps best debugging practices into a simple loop.
 
 ### #4: We Built A Ball Of Mud
 
-> "Invest in the design of the system _every day_."
+> "Invest in the design of the system *every day*."
 >
 > Kent Beck, [Extreme Programming Explained](https://www.amazon.co.uk/Extreme-Programming-Explained-Embrace-Change/dp/0321278658)
 
@@ -132,10 +134,10 @@ For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/S
 
 This is built in to every layer of these skills:
 
-- [`/to-prd`](./skills/engineering/to-prd/SKILL.md) quizzes you about which modules you're touching before creating a PRD
-- [`/zoom-out`](./skills/engineering/zoom-out/SKILL.md) tells the agent to explain code in the context of the whole system
+- `[/to-prd](./skills/engineering/to-prd/SKILL.md)` quizzes you about which modules you're touching before creating a PRD
+- `[/zoom-out](./skills/engineering/zoom-out/SKILL.md)` tells the agent to explain code in the context of the whole system
 
-And crucially, [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
+And crucially, `[/improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)` helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
 
 ### Summary
 
@@ -177,3 +179,4 @@ Tools I keep around but rarely use.
 - **[migrate-to-shoehorn](./skills/misc/migrate-to-shoehorn/SKILL.md)** — Migrate test files from `as` type assertions to @total-typescript/shoehorn.
 - **[scaffold-exercises](./skills/misc/scaffold-exercises/SKILL.md)** — Create exercise directory structures with sections, problems, solutions, and explainers.
 - **[setup-pre-commit](./skills/misc/setup-pre-commit/SKILL.md)** — Set up Husky pre-commit hooks with lint-staged, Prettier, type checking, and tests.
+

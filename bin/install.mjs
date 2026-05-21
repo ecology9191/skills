@@ -1,93 +1,179 @@
 #!/usr/bin/env node
-import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  collectSkillsByBucket,
+  countByBucket,
+  flattenCatalog,
+  formatBucketCounts,
+} from "./collect-skills.mjs";
+import { promptSkillSelection } from "./prompt-skills.mjs";
+import { parseArgs, resolveSelection, skillsFromNames } from "./resolve-selection.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const buckets = ["engineering", "productivity", "misc"];
-const args = new Set(process.argv.slice(2));
 const destRoot = path.join(os.homedir(), ".agents", "skills");
-const isGitCheckout = fs.existsSync(path.join(root, ".git"));
-const link =
-  args.has("--link") || (isGitCheckout && !args.has("--copy"));
 
-if (args.has("--help") || args.has("-h")) {
-  console.log(`Usage: npx @ecology91/skills [--dry-run] [--copy] [--link]
+function printHelp() {
+  console.log(`Usage: npx @ecology91/skills [options]
 
 Install promoted skills into ~/.agents/skills.
 
 From a git checkout, symlinks by default so local edits are picked up live.
 From the published npm package, copies by default.
 
-  --link  Force symlinks (runs scripts/link-skills.sh)
-  --copy  Force copies instead of symlinks`);
+Interactive mode (TTY): pick buckets and individual skills in one menu.
+Non-interactive (CI, pipes): installs all promoted skills.
+
+  --dry-run         Print actions without installing
+  --copy            Force copies instead of symlinks
+  --link            Force symlinks
+  --all             Skip menu; install all promoted skills
+  --bucket <ids>    Comma-separated buckets (engineering, productivity, misc)
+  --skill <names>   Comma-separated skill names`);
+}
+
+let parsed;
+try {
+  parsed = parseArgs(process.argv.slice(2));
+} catch (error) {
+  console.error(`error: ${error.message}`);
+  process.exit(1);
+}
+
+const { flags, values } = parsed;
+
+if (flags.has("--help") || flags.has("-h")) {
+  printHelp();
   process.exit(0);
 }
 
-const dryRun = args.has("--dry-run");
+const dryRun = flags.has("--dry-run");
+const isGitCheckout = fs.existsSync(path.join(root, ".git"));
+const link = flags.has("--link") || (isGitCheckout && !flags.has("--copy"));
+const isInteractive =
+  Boolean(process.stdin.isTTY && process.stdout.isTTY) && !flags.has("--all");
 
-function collectSkills() {
-  const skills = [];
+const catalog = collectSkillsByBucket(root, destRoot);
+const allSkills = flattenCatalog(catalog);
 
-  for (const bucket of buckets) {
-    const bucketDir = path.join(root, "skills", bucket);
-    if (!fs.existsSync(bucketDir)) continue;
-
-    for (const entry of fs.readdirSync(bucketDir, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-
-      const src = path.join(bucketDir, entry.name);
-      if (!fs.existsSync(path.join(src, "SKILL.md"))) continue;
-
-      skills.push([src, path.join(destRoot, entry.name)]);
-    }
+function assertSafeDest() {
+  if (!fs.lstatSync(destRoot, { throwIfNoEntry: false })?.isSymbolicLink()) {
+    return;
   }
 
-  return skills;
+  const resolved = fs.realpathSync(destRoot);
+  const repoReal = fs.realpathSync(root);
+  if (resolved === repoReal || resolved.startsWith(`${repoReal}${path.sep}`)) {
+    console.error(
+      `error: ${destRoot} is a symlink into this repo (${resolved}).`,
+    );
+    console.error(
+      `Remove it (rm "${destRoot}") and re-run; the installer will recreate it as a real dir.`,
+    );
+    process.exit(1);
+  }
 }
 
+/** @param {{ bucket: string, name: string }[]} skills */
+function groupSkillsByBucket(skills) {
+  /** @type {Map<string, typeof skills>} */
+  const grouped = new Map();
+  for (const skill of skills) {
+    const list = grouped.get(skill.bucket) ?? [];
+    list.push(skill);
+    grouped.set(skill.bucket, list);
+  }
+  return grouped;
+}
+
+/** @param {{ bucket: string, name: string, src: string, dest: string }[]} skills */
 function installCopy(skills) {
-  if (!dryRun) fs.mkdirSync(destRoot, { recursive: true });
+  if (!dryRun) {
+    assertSafeDest();
+    fs.mkdirSync(destRoot, { recursive: true });
+  }
 
-  for (const [src, dest] of skills) {
-    if (dryRun) {
-      console.log(`would install ${path.basename(src)} -> ${dest}`);
-      continue;
+  const grouped = groupSkillsByBucket(skills);
+  for (const [bucket, bucketSkills] of grouped) {
+    console.log(`${bucket} (${bucketSkills.length})`);
+    for (const skill of bucketSkills) {
+      if (dryRun) {
+        console.log(`  would install ${skill.name} -> ${skill.dest}`);
+        continue;
+      }
+
+      fs.rmSync(skill.dest, { recursive: true, force: true });
+      fs.cpSync(skill.src, skill.dest, { recursive: true, force: true });
+      console.log(`  installed ${skill.name} -> ${skill.dest}`);
     }
-
-    fs.rmSync(dest, { recursive: true, force: true });
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.cpSync(src, dest, { recursive: true, force: true });
-    console.log(`installed ${path.basename(src)} -> ${dest}`);
   }
 }
 
+/** @param {{ bucket: string, name: string, src: string, dest: string }[]} skills */
 function installLink(skills) {
   if (dryRun) {
-    for (const [src, dest] of skills) {
-      console.log(`would link ${path.basename(src)} -> ${dest} (${src})`);
+    const grouped = groupSkillsByBucket(skills);
+    for (const [bucket, bucketSkills] of grouped) {
+      console.log(`${bucket} (${bucketSkills.length})`);
+      for (const skill of bucketSkills) {
+        console.log(`  would link ${skill.name} -> ${skill.dest} (${skill.src})`);
+      }
     }
     return;
   }
 
-  execFileSync("bash", [path.join(root, "scripts/link-skills.sh")], {
-    stdio: "inherit",
-  });
+  assertSafeDest();
+  fs.mkdirSync(destRoot, { recursive: true });
+
+  const grouped = groupSkillsByBucket(skills);
+  for (const [bucket, bucketSkills] of grouped) {
+    console.log(`${bucket} (${bucketSkills.length})`);
+    for (const skill of bucketSkills) {
+      const stat = fs.lstatSync(skill.dest, { throwIfNoEntry: false });
+      if (stat) {
+        fs.rmSync(skill.dest, { recursive: true, force: true });
+      }
+
+      fs.symlinkSync(skill.src, skill.dest);
+      console.log(`  linked ${skill.name} -> ${skill.src}`);
+    }
+  }
 }
 
-const skills = collectSkills();
+let selectedSkills;
+try {
+  selectedSkills = resolveSelection(catalog, parsed, isInteractive);
+} catch (error) {
+  console.error(`error: ${error.message}`);
+  process.exit(1);
+}
+
+if (selectedSkills === null) {
+  const selectedNames = await promptSkillSelection(catalog);
+  if (selectedNames === null) {
+    process.exit(0);
+  }
+  selectedSkills = skillsFromNames(selectedNames, allSkills);
+}
+
+if (selectedSkills.length === 0) {
+  console.log("No skills selected.");
+  process.exit(0);
+}
 
 if (link) {
-  installLink(skills);
+  installLink(selectedSkills);
+  const verb = dryRun ? "Checked" : "Linked";
   console.log(
-    `${dryRun ? "Checked" : "Linked"} ${skills.length} skills to ~/.agents/skills.`,
+    `${verb} ${selectedSkills.length} skills to ~/.agents/skills (${formatBucketCounts(countByBucket(selectedSkills))}).`,
   );
 } else {
-  installCopy(skills);
+  installCopy(selectedSkills);
+  const verb = dryRun ? "Checked" : "Installed";
   console.log(
-    `${dryRun ? "Checked" : "Installed"} ${skills.length} skills to ~/.agents/skills.`,
+    `${verb} ${selectedSkills.length} skills to ~/.agents/skills (${formatBucketCounts(countByBucket(selectedSkills))}).`,
   );
 }
 
