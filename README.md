@@ -63,8 +63,8 @@ This is just the same in the AI age. There is a communication gap between you an
 
 **The Fix** is to use:
 
-- `[/grill-me](./skills/productivity/grill-me/SKILL.md)` - for non-code uses
-- `[/grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)` - same as `[/grill-me](./skills/productivity/grill-me/SKILL.md)`, but adds more goodies (see below)
+- [`/grill-me`](./skills/productivity/grill-me/SKILL.md) - for non-code uses
+- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) - same as [`/grill-me`](./skills/productivity/grill-me/SKILL.md), but adds more goodies (see below)
 
 These are my most popular skills. They help you align with the agent before you get started, and think deeply about the change you're making. Use them *every* time you want to make a change.
 
@@ -91,7 +91,7 @@ This concision pays off session after session.
 
 
 
-This is built into `[/grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)`. It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
+This is built into [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md). It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
 
 It's hard to explain how powerful this is. It might be the single coolest technique in this repo. Try it, and see.
 
@@ -116,7 +116,7 @@ It's time to look at your feedback loops. Without feedback on how the code it pr
 
 For automated tests, a red-green-refactor loop is critical. This is where the agent writes a failing test first, then fixes the test. This helps give the agent a consistent level of feedback that results in far better code.
 
-I've built a `**[/tdd](./skills/engineering/tdd/SKILL.md)` skill** you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
+I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md)** skill you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
 
 For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/SKILL.md)** skill that wraps best debugging practices into a simple loop.
 
@@ -139,7 +139,7 @@ This is built in to every layer of these skills:
 - [`/to-prd`](./skills/engineering/to-prd/SKILL.md) quizzes you about which modules you're touching before creating a PRD
 - [`/zoom-out`](./skills/engineering/zoom-out/SKILL.md) tells the agent to explain code in the context of the whole system
 
-And crucially, `[/improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)` helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
+And crucially, [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
 
 ### Summary
 
