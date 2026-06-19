@@ -2,6 +2,10 @@
 
 Tools I keep around but rarely use.
 
+## Model-invoked
+
+Model- or user-reachable (rich trigger phrasing so the model can reach for them).
+
 - **[git-guardrails-opencode](./git-guardrails-opencode/SKILL.md)** — Set up opencode permissions to block dangerous git commands (push, reset --hard, clean, etc.) before they execute.
 - **[migrate-to-shoehorn](./migrate-to-shoehorn/SKILL.md)** — Migrate test files from `as` type assertions to @total-typescript/shoehorn.
 - **[scaffold-exercises](./scaffold-exercises/SKILL.md)** — Create exercise directory structures with sections, problems, solutions, and explainers.

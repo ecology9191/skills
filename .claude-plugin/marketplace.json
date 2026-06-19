@@ -7,10 +7,15 @@
       "name": "engineering",
       "source": "./engineering",
       "skills": [
+        "./ask-matt",
+        "./codebase-design",
         "./diagnose",
+        "./domain-modeling",
         "./grill-with-docs",
+        "./implement",
         "./improve-codebase-architecture",
         "./prototype",
+        "./resolving-merge-conflicts",
         "./setup-agent-skills",
         "./setup-coding-quality-checks",
         "./tdd",
@@ -27,9 +32,11 @@
       "skills": [
         "./caveman",
         "./grill-me",
+        "./grilling",
         "./handoff",
         "./teach",
-        "./write-a-skill"
+        "./write-a-skill",
+        "./writing-great-skills"
       ]
     },
     {
