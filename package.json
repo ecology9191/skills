@@ -1,6 +1,6 @@
 {
   "name": "@ecology91/skills",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "opencode agent skills for real engineering workflows.",
   "license": "MIT",
   "type": "module",
