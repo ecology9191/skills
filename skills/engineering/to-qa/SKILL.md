@@ -14,11 +14,13 @@ For Beads, the issue can be a parent with child work, an older cumulative issue,
 
 This skill reads completed implementation work from the configured issue tracker and writes a local QA session to QA To Do. It does not mutate tracker issues, pass/fail state, checklist items, evidence, archive state, or deletion state.
 
+Tracker discovery is local-first. Use the configured workflow when present; otherwise inspect existing Beads state, then structured `.scratch` issue files. Never infer GitHub, GitLab, or another hosted tracker from a Git remote. If neither local source nor configuration exists, ask the user to run `/setup-agent-skills`.
+
 ## Required Inputs
 
 - An explicit source issue reference from the user.
 - The current repository path.
-- A configured issue tracker workflow in `docs/agents/issue-tracker.md`, or explicit source issue references from the user.
+- A configured issue tracker workflow in `docs/agents/issue-tracker.md`, a detected local Beads/`.scratch` workflow, or explicit source issue references from the user.
 - Completed implementation source work only.
 - Access to the `qa-to-do` MCP server.
 
@@ -28,13 +30,13 @@ This skill reads completed implementation work from the configured issue tracker
 - Use `qa-to-do.qa_session_create` only when you have manually built a complete, validated QA session payload.
 - `run_to_qa_parent` currently automates Beads and structured `.scratch` trackers.
 - The `parentIssueId` MCP field is legacy-named. For Beads, pass the requested source issue ID even when it is cumulative or standalone rather than a literal parent.
-- For GitHub, GitLab, or custom trackers, use the repo-documented parent/child convention to gather completed child work, then call `qa_session_create` with a concrete QA session payload.
+- For an explicitly configured GitHub, GitLab, or custom tracker, use the repo-documented parent/child convention to gather completed child work, then call `qa_session_create` with a concrete QA session payload. Never infer a hosted tracker from the Git remote.
 
 ## Workflow
 
 1. Inspect the explicit source issue in the current repo.
 2. Read `docs/agents/issue-tracker.md` to understand how this repo identifies completed source work.
-3. Find completed source work only: closed/completed/done Beads child issues, discovered-from issues, older cumulative or standalone Beads issues, structured `.scratch` child files, or another repo-documented convention.
+3. Find completed source work only: closed Beads child issues, discovered-from issues, older cumulative or standalone Beads issues, completed structured `.scratch` child files, or another explicitly configured repo convention.
 4. Exclude open, blocked, incomplete, or unrelated work and keep those exclusions as warnings for the final report.
 5. Prefer acceptance criteria, QA notes, and source issue evidence over changed-file inference when creating checks.
 6. Read commits, changed files, and implementation context only as needed to make checks concrete and human-verifiable.
@@ -51,11 +53,11 @@ For Beads or structured `.scratch` repos, call `qa-to-do.run_to_qa_parent` with:
   "parentIssueId": "<requested issue id>",
   "repoPath": "<absolute repo path>",
   "repoName": "<optional repo name>",
-  "tracker": "auto"
+  "tracker": "<beads-or-scratch>"
 }
 ```
 
-Set `tracker` to `beads` or `scratch` only when the repo or user explicitly requires one. Use `auto` by default.
+Set `tracker` to `beads` when local Beads state exists; otherwise set it to `scratch` when structured `.scratch` issues exist. Use `auto` only when exactly one supported local tracker is detectable. Never use `auto` to infer or select a hosted service.
 
 If `run_to_qa_parent` reports that no supported tracker was detected, multiple trackers require a choice, or no completed source work exists, stop and report the issue clearly. Do not invent QA checks from unrelated closed work. Do not fail only because a Beads issue has no parent-child children; older Beads issues may be cumulative or standalone.
 
@@ -63,10 +65,10 @@ When manually calling `qa_session_create`, the payload must include only complet
 
 ## Beads Guidance
 
-- If the repo uses Beads and local automation is available, prefer `run_to_qa_parent` with `tracker: "auto"` or `tracker: "beads"`.
-- If you must inspect Beads manually, start with `bd show <issue-id> --json`, then fetch parent-child candidates with `bd list --parent <issue-id> --status all --json --limit 0` when the repo supports parent structure.
-- If no parent-child children exist, fetch the full Beads issue set with `bd list --status all --json --limit 0`, look for completed `discovered-from` dependencies that point to the requested issue, then fall back to the requested issue itself when it is closed, completed, or done.
-- Include only source issues whose status is closed, completed, or done according to the repo's Beads vocabulary.
+- If the repo uses Beads and local automation is available, prefer `run_to_qa_parent` with `tracker: "beads"`.
+- If you must inspect Beads manually, start with `bd show <issue-id> --json`, then fetch parent-child candidates with `bd list --parent <issue-id> --all --json --limit 0` when the repo supports parent structure.
+- If no parent-child children exist, fetch the full Beads issue set with `bd list --all --json --limit 0`, look for closed `discovered-from` dependencies that point to the requested issue, then fall back to the requested issue itself when its stored status is `closed`.
+- Include only source issues whose stored Beads status is `closed`.
 - Read included source issues with `bd show <issue-id> --json` and `bd comments <issue-id> --json` when extra evidence is needed.
 - Look for related implementation commits only when issue evidence is not enough to write a concrete QA check.
 - Do not require parent-child relationships for Beads; older Sandcastle/RALPH Beads may be cumulative or standalone.
@@ -74,7 +76,7 @@ When manually calling `qa_session_create`, the payload must include only complet
 
 ## Scratch Guidance
 
-- If the repo uses structured `.scratch` issues, prefer `run_to_qa_parent` with `tracker: "auto"` or `tracker: "scratch"`.
+- If the repo uses structured `.scratch` issues and no Beads state is present, prefer `run_to_qa_parent` with `tracker: "scratch"`.
 - Include only `.scratch` child files with frontmatter that identifies `id`, `title`, `status`, and the requested parent relationship.
 - Prefer `## Acceptance notes` or `## Acceptance criteria` bullets for expected results.
 - Do not create, edit, rename, move, close, or delete `.scratch` files during `/to-qa`.

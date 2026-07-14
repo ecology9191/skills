@@ -17,4 +17,6 @@ Each bucket folder has a `README.md` that lists every skill in the bucket with a
 
 Every `SKILL.md` is either user-invoked (`disable-model-invocation: true`, reachable only by the human) or model-invoked (model- or user-reachable). For the full definitions, description conventions, and why a user-invoked skill can invoke model-invoked skills but never another user-invoked one, see [docs/invocation.md](./docs/invocation.md).
 
+[`ask-matt`](./skills/engineering/ask-matt/SKILL.md) is the router over the promoted skill set. Whenever a promoted skill is added, removed, renamed, or changes how it fits into a workflow, update `ask-matt` so its map stays accurate.
+
 To (re)link every skill into the local harness skill directories (`~/.claude/skills`, `~/.agents/skills`), run `scripts/link-skills.sh`. Each entry is a symlink into this repo, so a `git pull` keeps installed skills current; re-run the script after adding, removing, or renaming a skill.

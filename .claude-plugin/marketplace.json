@@ -8,6 +8,7 @@
       "source": "./engineering",
       "skills": [
         "./ask-matt",
+        "./code-review",
         "./codebase-design",
         "./diagnose",
         "./domain-modeling",
@@ -15,14 +16,16 @@
         "./implement",
         "./improve-codebase-architecture",
         "./prototype",
+        "./research",
         "./resolving-merge-conflicts",
         "./setup-agent-skills",
         "./setup-coding-quality-checks",
         "./tdd",
         "./to-issues",
-        "./to-prd",
         "./to-qa",
+        "./to-spec",
         "./triage",
+        "./wayfinder",
         "./zoom-out"
       ]
     },

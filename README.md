@@ -40,7 +40,8 @@ OpenCode auto-loads `~/.agents/skills` alongside its own config tree, so one glo
 
 1. Quit and restart your agent so it reloads the skill list.
 2. Run `/setup-agent-skills` in your coding agent. It will:
-  - Ask you which issue tracker you want to use (GitHub, GitLab, Beads, `.scratch`, or another workflow)
+  - Recommend Beads when the repo already uses or explicitly configures Beads; otherwise recommend local `.scratch`
+  - Offer GitHub, GitLab, or another hosted tracker only when you explicitly opt in
   - Ask you what labels you apply to issues when you triage them (`/triage` uses labels)
   - Ask you where you want to save any docs we create
 3. Bam - you're ready to go.
@@ -114,9 +115,9 @@ It's time to look at your feedback loops. Without feedback on how the code it pr
 
 **The Fix**: You need the usual tranche of feedback loops: static types, browser access, and automated tests.
 
-For automated tests, a red-green-refactor loop is critical. This is where the agent writes a failing test first, then fixes the test. This helps give the agent a consistent level of feedback that results in far better code.
+For automated tests, a red-green loop is critical. The agent writes one failing behavior test, then adds only enough implementation to pass it before moving to the next slice. This gives the agent a consistent feedback signal and produces tests worth keeping.
 
-I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md)** skill you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
+I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md)** skill you can slot into any project. It defines good seams, good tests, and the rules of the red-green loop.
 
 For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/SKILL.md)** skill that wraps best debugging practices into a simple loop.
 
@@ -136,7 +137,7 @@ For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/S
 
 This is built in to every layer of these skills:
 
-- [`/to-prd`](./skills/engineering/to-prd/SKILL.md) quizzes you about which modules you're touching before creating a PRD
+- [`/to-spec`](./skills/engineering/to-spec/SKILL.md) quizzes you about which modules you're touching before creating a spec
 - [`/zoom-out`](./skills/engineering/zoom-out/SKILL.md) tells the agent to explain code in the context of the whole system
 
 And crucially, [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
@@ -155,25 +156,28 @@ Skills I use daily for code work.
 
 **User-invoked**
 
-- **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
+- **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the skills in this repo.
 - **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
-- **[implement](./skills/engineering/implement/SKILL.md)** — Implement a piece of work based on a PRD or set of issues.
+- **[implement](./skills/engineering/implement/SKILL.md)** — Implement work from a spec or set of issues, using TDD at pre-agreed seams and closing with code review.
 - **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-- **[setup-agent-skills](./skills/engineering/setup-agent-skills/SKILL.md)** — Scaffold the per-repo config (issue tracker, triage label vocabulary, domain doc layout) that the other engineering skills consume. Run once per repo before using `to-issues`, `to-prd`, `to-qa`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out`.
-- **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break any plan, spec, or PRD into independently-grabbable issues using vertical slices.
-- **[to-prd](./skills/engineering/to-prd/SKILL.md)** — Turn the current conversation into a PRD and publish it to the issue tracker. No interview — just synthesizes what you've already discussed.
+- **[setup-agent-skills](./skills/engineering/setup-agent-skills/SKILL.md)** — Configure a local-first issue tracker, triage labels, and domain-doc layout; existing Beads wins, otherwise `.scratch` is the default.
+- **[to-spec](./skills/engineering/to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the configured issue tracker without re-interviewing the user.
+- **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break a plan, spec, or conversation into context-sized tracer-bullet issues with explicit blocking edges.
 - **[triage](./skills/engineering/triage/SKILL.md)** — Move issues and external PRs through a state machine of triage roles.
+- **[wayfinder](./skills/engineering/wayfinder/SKILL.md)** — Plan an effort too large for one session as a shared map of investigation issues, resolving them until the route is clear.
 - **[zoom-out](./skills/engineering/zoom-out/SKILL.md)** — Tell the agent to zoom out and give broader context or a higher-level perspective on an unfamiliar section of code.
 
 **Model-invoked**
 
-- **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to answer a design question — a runnable terminal app for state/logic questions, or several radically different UI variations toggleable from one route.
+- **[code-review](./skills/engineering/code-review/SKILL.md)** — Review a diff in parallel against repository standards and its originating spec, including a Fowler smell baseline.
 - **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface.
 - **[diagnose](./skills/engineering/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — Actively build and sharpen a project's domain model — challenge terms against the glossary, stress-test with edge-case scenarios, and update `CONTEXT.md` and ADRs inline.
+- **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to answer a state, business-logic, or UI design question.
+- **[research](./skills/engineering/research/SKILL.md)** — Investigate a question against primary sources in a background agent and capture a cited Markdown report.
 - **[resolving-merge-conflicts](./skills/engineering/resolving-merge-conflicts/SKILL.md)** — Resolve an in-progress git merge or rebase conflict.
 - **[setup-coding-quality-checks](./skills/engineering/setup-coding-quality-checks/SKILL.md)** — Set up strict local formatters, linters, typechecks, tests, scanners, and git hooks that make agent coding safer.
-- **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
+- **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development at pre-agreed seams, one red-green vertical slice at a time.
 - **[to-qa](./skills/engineering/to-qa/SKILL.md)** — Create a local QA To Do session from completed source work under an explicit issue, including older non-parent Beads issues.
 
 ### Productivity

@@ -40,9 +40,9 @@ For a PR, the same states read against the attached code: `ready-for-agent` mean
 
 Every triaged issue should carry exactly one category role and one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
 
-These are canonical role names — the actual label strings used in the issue tracker may differ. The mapping should have been provided to you - run `/setup-agent-skills` if not.
+These are canonical role names — the actual label strings used in the issue tracker may differ. The mapping should have been provided to you; run `/setup-agent-skills` if not. Setup defaults to existing Beads state, then local `.scratch`; never infer GitHub, GitLab, or another hosted tracker merely from a remote.
 
-Before marking an issue `ready-for-agent`, verify it is one independently implementable vertical slice, has no unresolved human decision, records dependencies in the tracker instead of only prose, has concrete acceptance criteria, names runnable verification commands or explains why none exist, has explicit out-of-scope boundaries, and includes QA notes for human verification.
+Before marking an issue `ready-for-agent`, verify it is one independently implementable vertical slice, has no unresolved human decision, records dependencies in the tracker instead of only prose, has concrete acceptance notes or criteria usable for QA, names runnable verification commands or explains why none exist, and has explicit out-of-scope boundaries.
 
 `ready-for-human` is a Sandcastle gate. Open or deferred `ready-for-human` issues can stop autonomous RALPH runs. Use it only for real human decisions or manual work.
 

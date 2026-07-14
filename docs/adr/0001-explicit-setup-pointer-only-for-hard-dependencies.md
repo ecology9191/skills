@@ -2,9 +2,11 @@
 
 Engineering skills depend on per-repo config (issue tracker, triage label vocabulary, domain doc layout) seeded by `/setup-agent-skills`. Some skills cannot meaningfully function without that config — they have to publish to a specific issue tracker or apply a specific label string. Others only use it to sharpen output (vocabulary, ADR awareness) and degrade gracefully without it.
 
+Tracker setup is local-first: existing Beads state is preferred, including Sandcastle repositories explicitly configured to use `bd`; otherwise local Markdown under `.scratch` is the default. A Git remote is evidence that a hosted tracker exists, not consent to use it; GitHub, GitLab, and other remote services are explicit opt-ins.
+
 We split these into **hard-dependency** and **soft-dependency** skills:
 
-- **Hard dependency** (`to-issues`, `to-prd`, `to-qa`, `triage`) — include an explicit one-liner: _"… should have been provided to you — run `/setup-agent-skills` if not."_ Without the mapping, output is wrong, not just fuzzy. `/to-qa` is read-only against the issue tracker, but cannot find completed child work without the tracker workflow.
+- **Hard dependency** (`to-issues`, `to-spec`, `to-qa`, `triage`, `wayfinder`) — include an explicit one-liner: _"… should have been provided to you — run `/setup-agent-skills` if not."_ Without the mapping, output is wrong, not just fuzzy. `/to-qa` is read-only against the issue tracker, but cannot find completed child work without the tracker workflow.
 - **Soft dependency** (`diagnose`, `tdd`, `improve-codebase-architecture`, `zoom-out`) — reference "the project's domain glossary" and "ADRs in the area you're touching" in vague prose only. If the docs aren't there, the skill still works; output is just less sharp.
 
 The split keeps soft-dependency skills token-light and avoids cargo-culting the setup pointer into places where it isn't load-bearing.

@@ -1,6 +1,6 @@
 ---
 name: edit-article
-description: Edit and improve articles by restructuring sections, improving clarity, and tightening prose. Use when user wants to edit, revise, or improve an article draft.
+description: Edit and improve an article by restructuring sections, improving clarity, and tightening prose.
 metadata:
   internal: true
 disable-model-invocation: true
