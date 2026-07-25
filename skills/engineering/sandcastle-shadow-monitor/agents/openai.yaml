@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sandcastle Shadow Monitor"
+  short_description: "Start and supervise scoped Sandcastle runs"
+  default_prompt: "Use $sandcastle-shadow-monitor to start and supervise the Sandcastle run for the scoped issue I reference."

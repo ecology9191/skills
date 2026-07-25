@@ -18,6 +18,7 @@
         "./prototype",
         "./research",
         "./resolving-merge-conflicts",
+        "./sandcastle-shadow-monitor",
         "./setup-agent-skills",
         "./setup-coding-quality-checks",
         "./tdd",

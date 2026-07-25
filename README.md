@@ -176,6 +176,7 @@ Skills I use daily for code work.
 - **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to answer a state, business-logic, or UI design question.
 - **[research](./skills/engineering/research/SKILL.md)** — Investigate a question against primary sources in a background agent and capture a cited Markdown report.
 - **[resolving-merge-conflicts](./skills/engineering/resolving-merge-conflicts/SKILL.md)** — Resolve an in-progress git merge or rebase conflict.
+- **[sandcastle-shadow-monitor](./skills/engineering/sandcastle-shadow-monitor/SKILL.md)** — Start, attach to, and supervise a scoped Sandcastle run while deduplicating generic workflow churn into bounded local evidence.
 - **[setup-coding-quality-checks](./skills/engineering/setup-coding-quality-checks/SKILL.md)** — Set up strict local formatters, linters, typechecks, tests, scanners, and git hooks that make agent coding safer.
 - **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development at pre-agreed seams, one red-green vertical slice at a time.
 - **[to-qa](./skills/engineering/to-qa/SKILL.md)** — Create a local QA To Do session from completed source work under an explicit issue, including older non-parent Beads issues.

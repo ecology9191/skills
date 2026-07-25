@@ -43,6 +43,8 @@ A starting situation that generates work, then merges onto the main flow.
 
 - **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`/wayfinder`**. When the way from here to the destination isn't visible yet, it charts a **shared map** of investigation issues on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Then it merges onto the main flow at **`/to-spec`** (or, if the effort turned out small enough, straight to **`/implement`**). Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't.
 
+- **A scoped Sandcastle run needs to start, attach, or stay supervised** → **`/sandcastle-shadow-monitor`**. Give it the referenced scope, PRD, or issue. It validates runner and queue ownership before launch, watches the run by bounded log deltas, and keeps restart-safe generic churn evidence separate from issue failures without taking over tracker transitions.
+
 ## Codebase health
 
 Not feature work — upkeep.

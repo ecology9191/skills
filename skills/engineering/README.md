@@ -28,6 +28,7 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 - **[prototype](./prototype/SKILL.md)** — Build throwaway code to answer a state, business-logic, or UI design question.
 - **[research](./research/SKILL.md)** — Investigate a question against primary sources in a background agent and capture a cited Markdown report.
 - **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)** — Resolve an in-progress Git merge or rebase conflict.
+- **[sandcastle-shadow-monitor](./sandcastle-shadow-monitor/SKILL.md)** — Start, attach to, and supervise a scoped Sandcastle run while deduplicating generic workflow churn into bounded local evidence.
 - **[setup-coding-quality-checks](./setup-coding-quality-checks/SKILL.md)** — Set up strict local formatters, linters, typechecks, tests, scanners, and Git hooks.
 - **[tdd](./tdd/SKILL.md)** — Test-driven development at pre-agreed seams, one red-green vertical slice at a time.
 - **[to-qa](./to-qa/SKILL.md)** — Create a local QA To Do session from completed source work under an explicit issue.
