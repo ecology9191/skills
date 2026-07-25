@@ -85,6 +85,27 @@ async function runSnapshot(repoRoot, extraArgs = [], environment = {}) {
   return JSON.parse(stdout);
 }
 
+test("prints canonical help when invoked directly or through a symlink", async () => {
+  const linkParent = await mkdtemp(path.join(os.tmpdir(), "shadow-script-link-"));
+  tempDirectories.add(linkParent);
+  const linkedScriptPath = path.join(linkParent, "snapshot.mjs");
+  await symlink(scriptPath, linkedScriptPath, "file");
+
+  const direct = await execFileAsync(process.execPath, [scriptPath, "--help"]);
+  assert.match(
+    direct.stdout,
+    /^Usage: snapshot\.mjs --scope <scope> \[options\]\n/,
+  );
+  assert.ok(direct.stdout.trim().length > 0);
+
+  const linked = await execFileAsync(process.execPath, [
+    linkedScriptPath,
+    "--help",
+  ]);
+  assert.equal(linked.stderr, direct.stderr);
+  assert.equal(linked.stdout, direct.stdout);
+});
+
 test("creates the ledger, validates the queue head, and emits only later log deltas", async () => {
   const repoRoot = await fixture();
   const logPath = path.join(

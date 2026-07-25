@@ -13,7 +13,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 import {
@@ -1108,7 +1108,17 @@ async function main() {
   }
 }
 
-const invokedPath = process.argv[1]
-  ? pathToFileURL(path.resolve(process.argv[1])).href
-  : "";
-if (import.meta.url === invokedPath) await main();
+async function isMainModule() {
+  if (!process.argv[1]) return false;
+  try {
+    const [modulePath, invokedPath] = await Promise.all([
+      realpath(fileURLToPath(import.meta.url)),
+      realpath(path.resolve(process.argv[1])),
+    ]);
+    return modulePath === invokedPath;
+  } catch {
+    return false;
+  }
+}
+
+if (await isMainModule()) await main();
