@@ -1,5 +1,11 @@
 # @ecology91/skills
 
+## 0.4.0
+
+### Minor Changes
+
+- [`5cd13b6`](https://github.com/ecology9191/skills/commit/5cd13b6651b94ddc11d684944d19d4c7d35b72ea) - Add code-structure, find-skills, opensrc, and use-subagents-frequently to the published catalog, and publish the restart-safe Sandcastle shadow-monitor improvements.
+
 ## 0.3.0
 
 ### Minor Changes
