@@ -16,5 +16,7 @@ Reachable only when you type them (`disable-model-invocation: true`).
 Model- or user-reachable (rich trigger phrasing so the model can reach for them).
 
 - **[caveman](./caveman/SKILL.md)** — Ultra-compressed communication mode that cuts filler while keeping technical accuracy.
+- **[find-skills](./find-skills/SKILL.md)** — Discover and evaluate installable agent skills for a concrete task or missing capability.
 - **[grilling](./grilling/SKILL.md)** — Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved.
+- **[use-subagents-frequently](./use-subagents-frequently/SKILL.md)** — Delegate bounded independent work when a task is broad, parallelizable, or likely to overload the main context.
 - **[write-a-skill](./write-a-skill/SKILL.md)** — Create new skills with proper structure, progressive disclosure, and bundled resources.

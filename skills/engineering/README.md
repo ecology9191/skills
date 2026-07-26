@@ -10,6 +10,7 @@ Reachable only when you type them (`disable-model-invocation: true`).
 - **[grill-with-docs](./grill-with-docs/SKILL.md)** — Grilling session that also builds the project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
 - **[implement](./implement/SKILL.md)** — Implement work from a spec or set of issues, using TDD at pre-agreed seams and closing with code review.
 - **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through the selected one.
+- **[opensrc](./opensrc/SKILL.md)** — Inspect third-party package or repository source code as the hard source of truth.
 - **[setup-agent-skills](./setup-agent-skills/SKILL.md)** — Configure a local-first issue tracker, triage labels, and domain-doc layout; existing Beads wins, otherwise `.scratch` is the default.
 - **[to-spec](./to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the configured issue tracker without re-interviewing the user.
 - **[to-issues](./to-issues/SKILL.md)** — Break a plan, spec, or conversation into context-sized tracer-bullet issues with explicit blocking edges.
@@ -22,6 +23,7 @@ Reachable only when you type them (`disable-model-invocation: true`).
 Model- or user-reachable (rich trigger phrasing so the model can reach for them).
 
 - **[code-review](./code-review/SKILL.md)** — Review a diff in parallel against repository standards and its originating spec, including a Fowler smell baseline.
+- **[code-structure](./code-structure/SKILL.md)** — Separate domain orchestration from reusable operational mechanics when workflows start duplicating service-layer behavior.
 - **[codebase-design](./codebase-design/SKILL.md)** — Shared discipline and vocabulary for deep modules, small interfaces, clean seams, and interface-level testability.
 - **[diagnose](./diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce, minimise, hypothesise, instrument, fix, and regression-test.
 - **[domain-modeling](./domain-modeling/SKILL.md)** — Build and sharpen a project's domain model, challenge terms, stress-test scenarios, and update `CONTEXT.md` and ADRs.

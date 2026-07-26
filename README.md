@@ -160,6 +160,7 @@ Skills I use daily for code work.
 - **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
 - **[implement](./skills/engineering/implement/SKILL.md)** — Implement work from a spec or set of issues, using TDD at pre-agreed seams and closing with code review.
 - **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
+- **[opensrc](./skills/engineering/opensrc/SKILL.md)** — Inspect third-party package or repository source code as the hard source of truth.
 - **[setup-agent-skills](./skills/engineering/setup-agent-skills/SKILL.md)** — Configure a local-first issue tracker, triage labels, and domain-doc layout; existing Beads wins, otherwise `.scratch` is the default.
 - **[to-spec](./skills/engineering/to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the configured issue tracker without re-interviewing the user.
 - **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break a plan, spec, or conversation into context-sized tracer-bullet issues with explicit blocking edges.
@@ -170,6 +171,7 @@ Skills I use daily for code work.
 **Model-invoked**
 
 - **[code-review](./skills/engineering/code-review/SKILL.md)** — Review a diff in parallel against repository standards and its originating spec, including a Fowler smell baseline.
+- **[code-structure](./skills/engineering/code-structure/SKILL.md)** — Separate domain orchestration from reusable operational mechanics when workflows start duplicating service-layer behavior.
 - **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface.
 - **[diagnose](./skills/engineering/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — Actively build and sharpen a project's domain model — challenge terms against the glossary, stress-test with edge-case scenarios, and update `CONTEXT.md` and ADRs inline.
@@ -195,7 +197,9 @@ General workflow tools, not code-specific.
 **Model-invoked**
 
 - **[caveman](./skills/productivity/caveman/SKILL.md)** — Ultra-compressed communication mode that cuts filler while keeping technical accuracy.
+- **[find-skills](./skills/productivity/find-skills/SKILL.md)** — Discover and evaluate installable agent skills for a concrete task or missing capability.
 - **[grilling](./skills/productivity/grilling/SKILL.md)** — Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved. The reusable loop behind `grill-me` and `grill-with-docs`.
+- **[use-subagents-frequently](./skills/productivity/use-subagents-frequently/SKILL.md)** — Delegate bounded independent work when a task is broad, parallelizable, or likely to overload the main context.
 - **[write-a-skill](./skills/productivity/write-a-skill/SKILL.md)** — Create new skills with proper structure, progressive disclosure, and bundled resources.
 
 ### Misc

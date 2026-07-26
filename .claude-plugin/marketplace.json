@@ -9,12 +9,14 @@
       "skills": [
         "./ask-matt",
         "./code-review",
+        "./code-structure",
         "./codebase-design",
         "./diagnose",
         "./domain-modeling",
         "./grill-with-docs",
         "./implement",
         "./improve-codebase-architecture",
+        "./opensrc",
         "./prototype",
         "./research",
         "./resolving-merge-conflicts",
@@ -35,10 +37,12 @@
       "source": "./productivity",
       "skills": [
         "./caveman",
+        "./find-skills",
         "./grill-me",
         "./grilling",
         "./handoff",
         "./teach",
+        "./use-subagents-frequently",
         "./write-a-skill",
         "./writing-great-skills"
       ]

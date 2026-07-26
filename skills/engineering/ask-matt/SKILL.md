@@ -55,10 +55,11 @@ Not feature work — upkeep.
 
 ## Vocabulary underneath
 
-Two model-invoked references that run *beneath* the other skills — each the single source of truth for its vocabulary. Reach for them directly when the **words**, not the process, are the problem; or let the skills above pull them in.
+Three model-invoked references run *beneath* the other skills — each the single source of truth for its vocabulary. Reach for them directly when the **words**, not the process, are the problem; or let the skills above pull them in.
 
 - **`/domain-modeling`** — sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline `/grill-with-docs` drives to keep `CONTEXT.md` a clean glossary.
 - **`/codebase-design`** — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `/tdd` and `/improve-codebase-architecture` both speak it.
+- **`/code-structure`** — the service-layer boundary between domain orchestration and reusable operational mechanics. Reach for it when repeated workflows need one shared capability without leaking domain policy into the service.
 
 ## Crossing sessions
 
@@ -79,6 +80,9 @@ Usable independently; some also support or detour from the main flow.
 - **`/migrate-to-shoehorn`** — replace TypeScript `as` assertions in tests with `@total-typescript/shoehorn`.
 - **`/scaffold-exercises`** — create structured exercise directories with problems, solutions, and explainers.
 - **`/caveman`** — switch to ultra-compressed communication while retaining technical accuracy.
+- **`/find-skills`** — discover and verify installable skills when a missing capability may already exist in the wider ecosystem.
+- **`/opensrc`** — inspect the exact package or upstream repository source when source code, not documentation or memory, must settle the answer.
+- **`/use-subagents-frequently`** — keep broad or parallelizable work out of the main context by delegating bounded independent slices.
 - **`/write-a-skill`** — create a new skill with progressive disclosure and bundled resources.
 - **`/teach`** — learn a concept over multiple sessions, using the current directory as a stateful workspace.
 - **`/writing-great-skills`** — reference for writing and editing skills well.
