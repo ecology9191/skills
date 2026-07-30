@@ -93,7 +93,7 @@ Put the switcher in a single shared component so both sub-shapes can reuse it. L
 
 ### 5. Hand it over
 
-Surface the URL (and the `?variant=` keys). The user will flip through whenever they get to it. The interesting feedback is usually **"I want the header from B with the sidebar from C"** — that's the actual design they want.
+Surface the URL (and the `?variant=` keys). For each local HTML prototype, run `realpath -- "$artifact_path"` on the file actually written and print only its output on one unformatted line. The user will flip through whenever they get to it. The interesting feedback is usually **"I want the header from B with the sidebar from C"** — that's the actual design they want.
 
 ### 6. Capture the answer and clean up
 

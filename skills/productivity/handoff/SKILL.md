@@ -5,7 +5,9 @@ argument-hint: "What will the next session be used for?"
 disable-model-invocation: true
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+Write a handoff document summarising the current conversation so a fresh agent can continue the work.
+
+Save the document in the working project's local `.codex/handoffs/` directory. Create that directory if it does not exist. Prefix the filename with the current date in `YYYY-MM-DD` format, using a descriptive name such as `.codex/handoffs/YYYY-MM-DD-<handoff-name>.md`.
 
 Include a "suggested skills" section in the document, which suggests skills that the agent should invoke.
 
