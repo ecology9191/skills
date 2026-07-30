@@ -1,5 +1,11 @@
 # @ecology91/skills
 
+## 0.4.1
+
+### Patch Changes
+
+- [`54d6985`](https://github.com/ecology9191/skills/commit/54d6985fa5c7b34c615066ffdce5ca61bcee538f) - Improve `teach` lessons and reference documents with a researched, accessible dark technical-manual visual contract.
+
 ## 0.4.0
 
 ### Minor Changes
