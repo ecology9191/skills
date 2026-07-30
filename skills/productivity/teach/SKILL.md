@@ -12,7 +12,7 @@ The user has asked you to teach them something. This is a stateful request - the
 Treat the current directory as a teaching workspace. The state of their learning is captured in this directory in several files:
 
 - `MISSION.md`: A document capturing the _reason_ the user is interested in the topic. This should be used to ground all teaching. Use the format in [MISSION-FORMAT.md](./MISSION-FORMAT.md).
-- `./reference/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful documents which print out well, and are designed for quick reference.
+- `./reference/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful dark-theme documents by default, designed for quick reference. If you add print styles, treat them as an explicit print override rather than weakening the on-screen theme.
 - `RESOURCES.md`: A list of resources which can be explored to ground your teaching in contextual knowledge, or to acquire knowledge and wisdom. Use the format in [RESOURCES-FORMAT.md](./RESOURCES-FORMAT.md).
 - `./learning-records/*.md`: A directory of learning records, which capture what the user has learned. These are loosely equivalent to architectural decision records in software development - they capture non-obvious lessons and key insights that may need to be revised later, or drive future sessions. These should be used to calculate the zone of proximal development. They are titled `0001-<dash-case-name>.md`, where the number increments each time. Use the format in [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md).
 - `./lessons/*.html`: A directory of lessons. A **lesson** is a single, self-contained HTML output that teaches one tightly-scoped thing tied to the mission. This is the primary unit of teaching in this workspace.
@@ -48,11 +48,13 @@ Fluency can give the user an illusory sense of mastery, but storage strength is 
 
 A lesson is the main thing you produce — the unit in which knowledge and skills reach the user. Each lesson is one self-contained HTML file, saved to `./lessons/` and titled `0001-<dash-case-name>.html` where the number increments each time.
 
-A lesson should be **beautiful** — clean, readable typography and layout — since the user will return to these later to review. Think Tufte.
+A lesson should read like a calm technical manual: clean, highly legible, and easy to navigate when the user returns later. Use the dark visual contract below by default. Do not style lessons like presentation slides or decorative landing pages.
 
 The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.
 
 If possible, open the lesson file for the user by running a CLI command.
+
+For each local lesson or reference `.html` artifact, run `realpath -- "$artifact_path"` on the file actually written and print only its output on one unformatted line.
 
 Each lesson should link via HTML anchors to other lessons and reference documents.
 
@@ -60,13 +62,51 @@ Each lesson should recommend a primary source for the user to read or watch. Thi
 
 Each lesson should contain a reminder to ask followup questions to the agent. The agent is their teacher, and can assist with anything that's unclear.
 
+## Visual Theme
+
+Lessons and reference documents should use the **Technical Manual** theme by default. This is the selected production direction: a flat charcoal page, compact navigation rail, restrained cyan and green accents, and sans-serif reading typography. Treat readability and contrast as part of the contract, not optional polish.
+
+Use this palette:
+
+- Page background: `#10151B`
+- Primary surface: `#171E26`
+- Code background: `#090D11`
+- Primary text: `#E8EDF2`
+- Strong headings: `#F5F7F9`
+- Secondary text: `#C1CBD4`
+- Muted text: `#AEB9C3`
+- Borders and dividers: `#41505E`
+- Soft dividers: `#2D3944`
+- Links and primary accent: `#91D7E8`
+- Success accent: `#8DE6B4`
+- Warning accent: `#F2CA72`
+- Danger accent: `#F1A8A8`
+
+The primary text and page background have a contrast ratio of approximately `15.57:1`; muted text remains approximately `9.19:1`.
+
+See [VISUAL-THEME-RESEARCH.md](./VISUAL-THEME-RESEARCH.md) for the evidence, tested alternatives, and final selection behind this contract.
+
+Rules:
+
+- The page background must be one flat, opaque colour. Do not add gradients, radial glows, grid textures, patterns, illustrations, or translucent decoration behind reading content.
+- Default body text to `18px`, approximately `1.62` line height, regular weight, left alignment, and a maximum prose measure of `66ch`.
+- Use a clear humanist sans-serif with open letterforms for body text and headings. Use monospace only for code, commands, keyboard input, labels, and small section numbers.
+- Keep the title below approximately `3.45rem` and `19ch`. Build hierarchy with size, weight, spacing, numbered headings, and thin rules rather than oversized display type.
+- For a multi-section lesson on desktop, use a compact sticky contents rail beside the reading column. Collapse it above the content on narrow screens. Reference documents may omit the rail when a lookup-oriented layout works better.
+- Prefer continuous document flow. Use bordered rows and dividers for procedures, topology, troubleshooting, and retrieval prompts; do not turn every section into a card.
+- Use flat surfaces with square edges. Avoid decorative shadows, pills, floating panels, and rounded card grids.
+- Underline prose links and provide a strong visible keyboard focus indicator.
+- Use accent colours for links, short labels, callouts, diagrams, and correctness feedback, never for whole paragraphs.
+- Preserve reflow at a `320px` viewport. Long code may scroll within its own block, but the page itself must not scroll horizontally.
+- If a lesson or reference needs to print well, add a dedicated `@media print` override instead of weakening the on-screen theme.
+
 ## Assets
 
 Lessons are built from reusable **components**, stored in `./assets/`: stylesheets, quiz widgets, simulators, diagram helpers — anything a second lesson could reuse.
 
 Reuse is the default, not the exception. Before authoring a lesson, read `./assets/` and build from the components already there. When a lesson needs something new and reusable, write it as a component in `./assets/` and link to it — never inline code a future lesson would duplicate.
 
-A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library.
+A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. That stylesheet should establish the Technical Manual tokens and layout rules above as the default presentation contract. As the workspace grows, so should the component library.
 
 ## The Mission
 
